@@ -1,8 +1,8 @@
 # Help Doc https://ruby.github.io/rake/doc/rakefile_rdoc.html
 require_relative './prepare'
 require 'tools'
+require 'log/base_logger'
 
-DefaultConfig = Tools::default_config 
 
 Tools::load_mods('tasks')
 

@@ -4,9 +4,9 @@ module Tools
   def self.get_config(config_filepath, filter=nil)
     require 'erb'
     require 'yaml'
-    doc = ERB.new(IO.read(config_filepath)).result
-    config = YAML.load(doc)
 
+    doc = ERB.new(File.read(config_filepath)).result
+    config = YAML.load(doc)
 
     if filter
       config[filter]
@@ -17,20 +17,28 @@ module Tools
 
   def self.default_config
     default_config_path = File.expand_path(File.join($PROJECT_DIR, 'config.yml'))
-    filter = $APP_ENV
-    default_config = Tools::get_config(default_config_path, filter)
+    Tools::get_config(default_config_path, $APP_ENV)
   end
 
   def self.app_config(app_config_path = 'config.yml')
+ 
     default_config_path = File.expand_path(File.join($PROJECT_DIR, 'config.yml'))
-    filter = $APP_ENV
-    default_config = Tools::get_config(default_config_path, filter)
+    default_config = Tools::get_config(default_config_path, $APP_ENV)
 
     app_config_abs_path = File.expand_path(File.join($PROJECT_DIR, app_config_path))
-    app_config = Tools::get_config(app_config_abs_path,filter)
+    app_config = Tools::get_config(app_config_abs_path, $APP_ENV)
 
     {}.merge(default_config, app_config)
   end
+
+  def self.db_config(db_config_path = 'database.yml')
+
+    db_config_abs_path = File.expand_path(File.join($PROJECT_DIR, db_config_path))
+    db_config = Tools::get_config(db_config_abs_path, $APP_ENV)
+
+    {}.merge(db_config)
+  end
+
 
   def self.require_mods_from_dir(dir_path)
     mods = Dir["#{dir_path}/**/*.rb"]
