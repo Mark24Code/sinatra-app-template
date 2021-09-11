@@ -4,7 +4,17 @@ require 'config/base'
 class Root < BaseApp
 
   get '/' do
-    return @@app_config.to_json
+    locals = {
+      content: "apps/root.rb"
+    }
+    erb :root, :layout => :base, :locals => locals
   end
 
+
+  get '/json' do
+    
+    json({
+      data: 'hello json'
+    })
+  end
 end

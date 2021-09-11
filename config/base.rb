@@ -2,16 +2,19 @@
 require 'sinatra/base'
 require 'tools'
 require 'json'
-
 class BaseApp < Sinatra::Base
   # Inject config
   @@app_config = Tools::app_config('config/base_config.yml')
 
+  # Rewrite Views dir
+  settings.views = File.expand_path(File.join($PROJECT_DIR, 'views'))
 
   # Sinatra Middlewares
   # Help Doc http://sinatrarb.com/contrib/
 
   configure do
+    # http://sinatrarb.com/contrib/json
+    require "sinatra/json"
 
     # http://sinatrarb.com/contrib/multi_route
     require "sinatra/multi_route"
@@ -37,7 +40,7 @@ class BaseApp < Sinatra::Base
 
   configure :development, :production do
 
-    require 'log/base_loggerger'
+    require 'log/base_logger'
     # http://sinatrarb.com/contrib/custom_logger
     require 'sinatra/custom_logger'
     helpers Sinatra::CustomLogger
