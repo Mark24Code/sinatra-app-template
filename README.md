@@ -23,11 +23,9 @@ Add rails-like migration command line helpers.
 `rake server:run`
 
 
-------------
-
 ## Production Server & deploy
 
-`RACK_ENV=production APP_ENV=production  bundle exec rake server:run`
+`APP_ENV=production  bundle exec rake server:run`
 
 you can also use docker
 
@@ -75,4 +73,4 @@ rake server:run                 # Run server
 * [x] Rails-like migration helpers
 * [x] Command line helper
 * [x] Dockerfile
-* [ ] Test
+* [x] Test
