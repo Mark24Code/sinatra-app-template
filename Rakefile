@@ -1,15 +1,10 @@
 # Help Doc https://ruby.github.io/rake/doc/rakefile_rdoc.html
 require_relative './prepare'
+require 'tools'
 
+DefaultConfig = Tools::default_config 
 
-namespace :server do
-  desc "Run server"
-  task :run do
-    # TODO 可以增加配置
-    exec("rackup")
-  end
-end
-
+Tools::load_mods('tasks')
 
 desc "List all tasks"
 task :list do

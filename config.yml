@@ -1,0 +1,22 @@
+# Global default config 
+# focus on public config between applications
+
+default: &default
+  # envs
+  app_env: <%= ENV.fetch('APP_ENV') { 'development' } %> 
+ 
+  # puma server
+  bind: <%= ENV.fetch('HOST') { '0.0.0.0' } %> 
+  port: <%= ENV.fetch('PORT') { 3000 } %> 
+  secrets: <%= ENV.fetch('SECRETS') { 'YOU CANNT GUESS ME'} %>
+  max_threads: <%= ENV.fetch('MAX_THREADS') { 5 } %>
+
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

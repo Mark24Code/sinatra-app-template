@@ -1,0 +1,15 @@
+# config for database
+
+default: &default
+  database_url: <%= ENV.fetch('DATABASE_URL') %>
+development:
+  <<: *default
+  database_url: <%= ENV.fetch('DATABASE_URL') { 'development.sqlite3' } %>
+
+test:
+  <<: *default
+  database_url: <%= ENV.fetch('DATABASE_URL') { 'test.sqlite3' } %>
+
+production:
+  <<: *default
+  database_url: <%= ENV.fetch('DATABASE_URL') { 'production.sqlite3' } %>

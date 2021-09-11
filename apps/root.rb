@@ -1,10 +1,10 @@
 # Sinatra Doc http://sinatrarb.com/intro.html
-require 'sinatra/base'
+require 'config/base'
 
-class Root < Sinatra::Base
+class Root < App::Base
 
   get '/' do
-    'Hello Wolrd'
+    return @@app_config.to_json
   end
 
 end
