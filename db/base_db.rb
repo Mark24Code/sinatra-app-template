@@ -1,11 +1,12 @@
-require_relative './prepare'
+require_relative '../prepare'
 require 'tools'
 require 'sequel'
+require 'log/base_logger'
 
 # Base default database
 
 # https://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html
-DB = Sequel.connect(Tools::default_config['database_url'], logger: $LOGGER )
+DB = Sequel.connect(Tools::db_config('config/base_database.yml')['database_url'], logger: $LOGGER )
 
 if $APP_ENV == 'development'
   DB.sql_log_level = :debug

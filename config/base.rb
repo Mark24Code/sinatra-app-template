@@ -1,6 +1,6 @@
 # Sinatra Doc http://sinatrarb.com/intro.html
-require 'sinatra/base'
 require 'tools'
+require 'sinatra/base'
 require 'json'
 class BaseApp < Sinatra::Base
   # Inject config

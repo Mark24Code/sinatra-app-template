@@ -1,9 +1,11 @@
-require_relative './prepare'
-
 # TODO
 # init
+require_relative './prepare'
 # config
+require 'tools'
 # database
+require 'db/base_db'
+
 # rack middleware
 
 # mount app
