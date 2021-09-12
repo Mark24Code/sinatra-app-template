@@ -65,7 +65,7 @@ MIGRATION_TEMPLATE
     end
 
     puts "MIGRATION CREATED:"
-    puts "#{path}"
+    puts "#{migration_path}"
   end
 
 
