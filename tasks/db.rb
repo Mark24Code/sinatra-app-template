@@ -100,16 +100,22 @@ MIGRATION_TEMPLATE
 
   # http://sequel.jeremyevans.net/rdoc/files/doc/migration_rdoc.html#label-Running+migrations
   desc "Rollback to migration"
-  task :rollback, [:version]  => :connect do |t|
-    version = if DB.tables.include?(:schema_migrations)
-                previous = DB[:schema_migrations].order(Sequel.desc(:filename)).limit(2).all[1]
-                previous ? previous[:filename].split("_").first : nil
-              end || 0
+  task :rollback, [:version]  => :connect do |t, args|
+    version = args[:version] || nil
+    if !version
+      version = if DB.tables.include?(:schema_migrations)
+                  previous = DB[:schema_migrations].order(Sequel.desc(:filename)).limit(2).all[1]
+                  previous ? previous[:filename].split("_").first : nil
+                end || 0
+    end
 
+
+    puts "Rollback To #{version}"
+  
     Sequel::Migrator.run(DB, MIGRATIONS_DIR, target: version.to_i)
 
     if IS_DEVELOPMENT
-      system("sequel -d #{DATABASEDATABASE_URL_URL} > #{db_dir}/schema.rb")
+      system("sequel -d #{DATABASE_URL} > #{MIGRATIONS_DIR}/schema.rb")
     end
 
     Rake::Task["db:version"].execute
@@ -117,14 +123,22 @@ MIGRATION_TEMPLATE
 
 
   desc "Prints current schema version"
-  task :version => :connect do    
-    filename = if DB.tables.include?(:schema_migrations)
-      DB[:schema_migrations].order(Sequel.desc(:filename)).first[:filename]
-    end || 0
+  task :version => :connect do
+    first_record = if DB.tables.include?(:schema_migrations)
+      DB[:schema_migrations].order(Sequel.desc(:filename)).first
+    end
 
-    version, rest = filename.split('_')
-    puts "Schema Version: #{version}"
-    puts "Migration: #{filename}"
+    if first_record
+      filename = first_record[:filename]
+
+      version, rest = filename.split('_')
+      puts "Schema Version: #{version}"
+      puts "Migration: #{filename}"
+    else 
+      puts "Schema Version: 0"
+      puts "There is schema version record"
+    end
+
   end
 
   desc "List database tables"
