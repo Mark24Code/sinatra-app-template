@@ -1,26 +1,26 @@
-require 'sequel'
-require 'tools'
-require 'log/base_logger'
+
 
 namespace :db do
-  
   MIGRATIONS_DIR = 'db/migrations'
-  IS_DEVELOPMENT = $APP_ENV == 'development'
-  DATABASE_CONFIG = Tools::db_config('config/base_database.yml')
-  DATABASE_URL = DATABASE_CONFIG['database_url']
+  DATABASE_URL = Config.current.database_url
 
   desc "Connect database"
   task :connect do
     Sequel.extension :migration
-    DB = Sequel.connect(DATABASE_URL, logger: $LOGGER )
+    # DB = Sequel.connect(DATABASE_URL, logger: $LOGGER )
+    if !DB
+      raise 'Please make sure DB is load before all Rake tasks'
+    end
   end
 
 
   desc "Create database"
   task :create,[:database_name] do | t, args |
     db_name = args[:database_name]
-    puts "CREATEDB: #{db_name}"
-    system("createdb #{db_name}")
+    # puts "CREATEDB: #{db_name}"
+    # system("createdb #{db_name}")
+    puts "You Need Run Command On Your System:"
+    puts "`createdb #{db_name}` for postgresql"
   end
 
   desc "Drop database"
@@ -79,7 +79,7 @@ MIGRATION_TEMPLATE
     end
 
 
-    if IS_DEVELOPMENT
+    if Config.current.development?
       # http://sequel.jeremyevans.net/rdoc/files/doc/migration_rdoc.html#label-Dumping+the+current+schema+as+a+migration
       # -d ruby style
       # system("sequel -d #{DATABASE_URL} > #{MIGRATIONS_DIR}/schema.rb")
@@ -114,7 +114,7 @@ MIGRATION_TEMPLATE
   
     Sequel::Migrator.run(DB, MIGRATIONS_DIR, target: version.to_i)
 
-    if IS_DEVELOPMENT
+    if Config.current.development?
       system("sequel -d #{DATABASE_URL} > #{MIGRATIONS_DIR}/schema.rb")
     end
 

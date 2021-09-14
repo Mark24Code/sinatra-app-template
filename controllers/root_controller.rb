@@ -1,7 +1,5 @@
 # Sinatra Doc http://sinatrarb.com/intro.html
-require 'config/base'
-
-class Root < BaseApp
+class RootController < BaseController
 
   get '/' do
     locals = {

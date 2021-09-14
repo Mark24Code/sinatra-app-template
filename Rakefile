@@ -1,17 +1,22 @@
 # Help Doc https://ruby.github.io/rake/doc/rakefile_rdoc.html
-require_relative './prepare'
-require 'tools'
-require 'log/base_logger'
 
+# Auto Setup
+# auto import ordered setup modules
+# you can change file name for controlling relative require order.  
+# e.g 01_first_setup, 02_next_setup
+setups = [
+  'setups',
+  'cores',
+  'configs',
+  'loggers',
+  'dbs',
+  'models',
+  'seeds',
+  'tasks'
+]
 
-Tools::load_mods('tasks')
-
-require "rake/testtask"
-desc "Test"
-Rake::TestTask.new(:test) do |t|
-  t.libs << "test"
-  t.libs << "lib"
-  t.test_files = FileList["test/**/test_*.rb"]
+setups.each do |setup_step|
+  Dir.glob("./{#{setup_step}}/*.rb").sort.each { |file| require file }
 end
 
 

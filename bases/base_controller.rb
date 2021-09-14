@@ -1,10 +1,9 @@
 # Sinatra Doc http://sinatrarb.com/intro.html
 require 'sinatra/base'
-require 'tools'
 require 'json'
-class BaseApp < Sinatra::Base
+
+class BaseController < Sinatra::Base
   # Inject config
-  @@app_config = Tools::app_config('config/base_config.yml')
 
   # Rewrite Views dir
   settings.views = File.expand_path(File.join($PROJECT_DIR, 'views'))
@@ -40,11 +39,10 @@ class BaseApp < Sinatra::Base
 
   configure :development, :production do
 
-    require 'log/base_logger'
     # http://sinatrarb.com/contrib/custom_logger
     require 'sinatra/custom_logger'
     helpers Sinatra::CustomLogger
-    set :logger, $LOGGER
+    set :logger, Loggers.base
   end
 
 

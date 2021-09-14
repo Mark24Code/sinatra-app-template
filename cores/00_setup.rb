@@ -3,7 +3,8 @@ $LOAD_PATH.unshift(__dir__) unless $LOAD_PATH.include?(__dir__)
 
 # Project directory
 if !$PROJECT_DIR
-  $PROJECT_DIR = File.expand_path(__dir__)
+  # 相对自己，绝对路径
+  $PROJECT_DIR = File.expand_path(File.join(__dir__, '..'))
 end
 
 # Inject APP_ENV

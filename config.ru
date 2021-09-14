@@ -1,15 +1,25 @@
-require_relative './prepare'
+# Auto Setup
+# auto import ordered setup modules
+# you can change file name for controlling relative require order.  
+# e.g 01_first_setup, 02_next_setup
+setups = [
+  'setups',
+  'cores',
+  'configs',
+  'loggers',
+  'dbs',
+  'models',
+  'seeds',
+  'helpers',
+  'bases',
+  'controllers'
+]
 
-# TODO
-# init
-# config
-# database
-# rack middleware
+setups.each do |setup_step|
+  Dir.glob("./{#{setup_step}}/*.rb").sort.each { |file| require file }
+end
 
-# mount app
-require 'apps/root'
-
-# router 
+# routers(handy config)
 map '/' do
-  run Root 
+  run RootController 
 end
