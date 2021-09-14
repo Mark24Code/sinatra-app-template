@@ -27,7 +27,7 @@ you can also use docker
 ## Custom server & database
 
 
-You can use DSL to config KEY:Value , then you application just use.
+You can use DSL to config `Key:Value` , then you application just use.
 
 ```ruby
 Config::Default.configure do
@@ -62,7 +62,7 @@ Production < Default
 ```
 
 
-In your code, just use  `Config` direct. `Bootstrap` has loaded all necessery mods before your code.
+In your code, just use  `Config` directly. `core/bootstrap`  do a work that loaded all necessery mods before your code.
 
 ```Ruby
 Config.current  # current env configuration
@@ -74,7 +74,7 @@ Config::Development
 Config::Development.database_url
 ```
 
-You can also create your own Config  for your single Application
+You can also create your own `Config`  for your single Application:
 
 ```ruby
 class MyConfig < Config::Base
@@ -92,6 +92,64 @@ end
 Edit `config.ru`
 
 Lark also is Rack application. We can use Rack middlewares.
+
+```ruby
+require_relative './cores/bootstrap'
+Bootstrap.rack 
+
+# you can load Rack middleware here
+
+# mount applications
+require 'controllers/root_controller'
+# routers(handy config)
+map '/' do
+  run RootController 
+end
+```
+
+
+# Base
+
+`bases` directory are use for Application Base Class.
+
+You can make different Configured Sinatra Application class here, then your application/controller just inherit the Base Class to create Application.
+
+It will share Config, and make less code.
+
+```ruby
+# Sinatra Doc http://sinatrarb.com/intro.html
+require 'sinatra/base'
+require 'json'
+
+class BaseController < Sinatra::Base
+  # Inject config
+
+  # Config & register Sinatra Extensions
+
+  # Rewrite Views dir
+  settings.views = File.expand_path(File.join($PROJECT_DIR, 'views'))
+
+  configure :development do
+    require 'sinatra/reloader'
+    register Sinatra::Reloader
+  end
+
+  # mount Sinatra Helpers
+
+  # mount Sinatra middlewares
+
+end
+
+
+# Share Configuration
+
+class MyPageServer < BaseController
+end
+
+class MyApiServer < BaseController
+end
+
+```
 
 # ORM & Tools
 
