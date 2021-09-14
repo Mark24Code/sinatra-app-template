@@ -7,6 +7,28 @@ Tech component: Rack+Sinatra+Sequel and default use Postgresql database.
 Add rails-like migration command line helpers.
 
 
+## Openbox Features
+
+### Apps
+
+* [x] Multi Env Configuration
+* [x] Multi router DSL base on Rack
+* [x] CORS support
+* [x] Hot reload
+* [x] Custom logger
+* [x] ORM base on Sequel'
+
+### Tasks
+
+* [x] Rails-like migration helpers
+* [x] Test
+* [x] Seed
+
+### CI&CD
+
+* [x] Dockerfile
+
+
 ## Find helpful rake tasks
 
 `rake` or  `rake -T`
@@ -173,30 +195,6 @@ rake seed:run[seed_name]        # Seed: run seed
 rake server:run                 # Run server
 rake test                       # Run tests
 ```
-
-
-## Openbox Features
-
-### Apps
-
-* [x] Multi Env Configuration
-* [x] Multi router DSL base on Rack
-* [x] CORS support
-* [x] Hot reload
-* [x] Custom logger
-* [x] ORM base on Sequel'
-
-### Tasks
-
-* [x] Rails-like migration helpers
-* [x] Test
-* [x] Seed
-
-### CI&CD
-
-* [x] Dockerfile
-
-
 
 # Project Structure
 
