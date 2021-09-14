@@ -26,9 +26,67 @@ you can also use docker
 
 ## Custom server & database
 
-Edit `config.yml`
 
-can change server、database
+You can use DSL to config KEY:Value , then you application just use.
+
+```ruby
+Config::Default.configure do
+  set :app_env, ENV.fetch('APP_ENV'){ 'development' }
+  set :bind, ENV.fetch('HOST') { '0.0.0.0' }
+  set :port, ENV.fetch('PORT') { 3000 }
+  set :secrets, ENV.fetch('SECRETS') { 'YOU CANNT GUESS ME' }
+  set :max_threads, ENV.fetch('MAX_THREADS') { 5 }
+
+  set :database_url, ENV['DATABASE_URL']
+end
+
+Config::Development.configure do 
+  set :database_url, 'ENV['DATABASE_URL']'
+end
+
+Config::Test.configure do 
+  set :database_url, ENV['DATABASE_URL']
+end
+
+Config::Production.configure do 
+  # set :database_url, ENV['DATABASE_URL']
+end
+```
+
+They have an inheritance relationship
+
+```
+Development < Default
+Test < Default
+Production < Default
+```
+
+
+In your code, just use  `Config` direct. `Bootstrap` has loaded all necessery mods before your code.
+
+```Ruby
+Config.current  # current env configuration
+
+Config::Development.database_url
+
+Config::Development
+
+Config::Development.database_url
+```
+
+You can also create your own Config  for your single Application
+
+```ruby
+class MyConfig < Config::Base
+
+end
+
+MyConfig.configure do 
+  # set :database_url, ENV['DATABASE_URL']
+end
+
+```
+
 ## Mount different Sinatra web application
 
 Edit `config.ru`
