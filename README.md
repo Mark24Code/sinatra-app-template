@@ -6,13 +6,6 @@ Tech component: Rack+Sinatra+Sequel and default use Postgresql database.
 
 Add rails-like migration command line helpers.
 
-## features
-
-* Helpful `Tools` 
-  * Project dir add to $LOADPATH
-  * Provide migration tasks
-  * Add $PROJECT_DIR
-  * Base on $PROJECT_DIR auto load config
 
 ## Find helpful rake tasks
 
