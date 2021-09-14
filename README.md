@@ -99,11 +99,11 @@ rake test                       # Run tests
 ├── controllers 
 │   └── root_controller.rb
 ├── cores # Inject ENVS and autoloads files, make MVC works
-│   ├── 01_config.rb
+│   ├── 01_config.rb # Names can controller mount order
 │   └── bootstrap.rb
-├── dbs # Database instances, you can make multi database here
-│   ├── default_db.rb
-│   └── migrations
+├── dbs # You can make multi database here
+│   ├── default_db.rb # default database connect instance
+│   └── migrations # save database migrations
 ├── docs
 │   └── good.feature
 ├── log # Directory for save logs by default
@@ -125,3 +125,39 @@ rake test                       # Run tests
     └── root.erb
 
 ```
+
+# Bootstrap & Load orders
+
+
+## For Rake
+
+```
+require_relative './cores/bootstrap'
+Bootstrap.rake
+```
+
+It will auto load files make sure rake task can work.
+
+In rake we can use `Config.current` to read configuration.
+
+`DB` also available.
+
+## For Rack/Applications
+
+In the same way
+
+```
+require_relative './cores/bootstrap'
+Bootstrap.rack
+# OR
+# Bootstrap.apps
+```
+
+It will autoload all dep mods. Share with a context.
+
+
+## Change load orders
+
+ `cores/bootstrap.rb`  defines different load orders, you can change.
+
+ In anther way, you can change filename to e.g  `00_before_all.rb` 、`01_first_load.rb` to control mods load order.
