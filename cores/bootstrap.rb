@@ -42,7 +42,6 @@ module Bootstrap
         'loggers',
         'dbs',
         'models',
-        # 'seeds',
         'helpers',
         'bases',
         'controllers'
@@ -61,9 +60,7 @@ module Bootstrap
         'loggers',
         'dbs',
         'models',
-        # 'seeds',
         'tasks'
-        # 'tests'
       ]
       self.loads_setups(setups)
     end
