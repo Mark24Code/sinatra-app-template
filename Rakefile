@@ -12,13 +12,13 @@ setups = [
   'dbs',
   'models',
   'seeds',
+  'tests',
   'tasks'
 ]
 
 setups.each do |setup_step|
   Dir.glob("./{#{setup_step}}/*.rb").sort.each { |file| require file }
 end
-
 
 desc "List all tasks"
 task :list do
