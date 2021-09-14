@@ -44,26 +44,38 @@ Provide rails-like rake task help you build app quickly.
 rake db:check                   # Checking for current migrations
 rake db:connect                 # Connect database
 rake db:console                 # Database Console
-rake db:create                  # Create database
+rake db:create[database_name]   # Create database
 rake db:create_migration[name]  # Create a migration
-rake db:drop                    # Drop database
+rake db:drop[database_name]     # Drop database
 rake db:ls                      # List database tables
 rake db:migrate[version]        # Run migrations
 rake db:rollback[version]       # Rollback to migration
 rake db:version                 # Prints current schema version
+rake list                       # List all tasks
+rake seed:all                   # Seed: run all seeds
+rake seed:run[seed_name]        # Seed: run seed
 rake server:run                 # Run server
+rake test                       # Run tests
 ```
 
 
-## Configured Features
+## Openbox Features
 
-* [x] config.yml
-* [x] multi router DSL
+### Apps
+
+* [x] Multi Env Configuration
+* [x] Multi router DSL base on Rack
 * [x] CORS support
 * [x] Hot reload
 * [x] Custom logger
-* [x] ORM use Sequel
+* [x] ORM base on Sequel'
+
+### Tasks
+
 * [x] Rails-like migration helpers
-* [x] Command line helper
-* [x] Dockerfile
 * [x] Test
+* [x] Seed
+
+### CI&CD
+
+* [x] Dockerfile
