@@ -7,7 +7,6 @@ namespace :db do
   desc "Connect database"
   task :connect do
     Sequel.extension :migration
-    # DB = Sequel.connect(DATABASE_URL, logger: $LOGGER )
     if !DB
       raise 'Please make sure DB is load before all Rake tasks'
     end
