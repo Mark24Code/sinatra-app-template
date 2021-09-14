@@ -79,3 +79,49 @@ rake test                       # Run tests
 ### CI&CD
 
 * [x] Dockerfile
+
+
+
+# Project Structure
+
+```
+.
+├── Dockerfile # Common Dockerfile
+├── Gemfile
+├── Gemfile.lock
+├── README.md
+├── Rakefile # Rake Task Index File.
+├── bases # Base configured class. You can make different BaseClasses then reuse them.
+│   └── base_controller.rb # You contoller can inherit it or write yourself.
+├── config.ru # Application index. You can mount controllers and routes here.
+├── configs # You can make different configs for applications
+│   └── config.rb # Base config
+├── controllers 
+│   └── root_controller.rb
+├── cores # Inject ENVS and autoloads files, make MVC works
+│   ├── 01_config.rb
+│   └── bootstrap.rb
+├── dbs # Database instances, you can make multi database here
+│   ├── default_db.rb
+│   └── migrations
+├── docs
+│   └── good.feature
+├── log # Directory for save logs by default
+│   └── development.log
+├── loggers # Loggers for application
+│   └── default_logger.rb
+├── public # Public resources
+│   └── favicon.svg
+├── seeds # Seeds
+├── tasks # Rake helpful tasks 
+│   ├── db_task.rb
+│   ├── seed_task.rb
+│   ├── server_task.rb
+│   └── test_task.rb
+├── tests # Test cases
+│   └── test_demo.rb
+└── views # views template
+    ├── base.erb
+    └── root.erb
+
+```
