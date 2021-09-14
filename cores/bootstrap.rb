@@ -42,7 +42,7 @@ module Bootstrap
         'loggers',
         'dbs',
         'models',
-        'seeds',
+        # 'seeds',
         'helpers',
         'bases',
         'controllers'
@@ -61,7 +61,7 @@ module Bootstrap
         'loggers',
         'dbs',
         'models',
-        'seeds',
+        # 'seeds',
         'tasks'
         # 'tests'
       ]
