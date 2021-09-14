@@ -1,7 +1,7 @@
 
 
 namespace :db do
-  MIGRATIONS_DIR = 'db/migrations'
+  MIGRATIONS_DIR = 'dbs/migrations'
   DATABASE_URL = Config.current.database_url
 
   desc "Connect database"
@@ -36,7 +36,7 @@ namespace :db do
 
     # http://sequel.jeremyevans.net/rdoc/files/doc/migration_rdoc.html#label-TimestampMigrator+Filenames
     timestamp = Time.now.strftime("%Y%m%d%H%M%S")
-    migration_path = File.expand_path(File.join($PROJECT_DIR,"db","migrations","#{timestamp}_#{args[:name]}.rb"))
+    migration_path = File.expand_path(File.join($PROJECT_DIR, MIGRATIONS_DIR, "#{timestamp}_#{args[:name]}.rb"))
 
     File.open(migration_path,"w") do |f|
       f.write(<<-MIGRATION_TEMPLATE
