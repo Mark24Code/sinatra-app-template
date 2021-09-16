@@ -26,6 +26,9 @@ class BaseController < Sinatra::Base
     set :allow_methods, 'GET,POST,PUT,DELETE,HEAD,OPTIONS'
     set :allow_headers, 'content-type,if-modified-since,allow_headers,authorization'
 
+    # http://sinatrarb.com/contrib/content_for
+    require "sinatra/content_for"
+    helpers Sinatra::ContentFor
   end
 
   configure :development do
