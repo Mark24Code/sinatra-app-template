@@ -7,7 +7,7 @@ DB = Sequel.connect(Config.current.database_url, logger: Loggers.base)
 
 if $APP_ENV == "development"
   DB.sql_log_level = :debug
-  DB.loggers << Logger.new($stdout)
+  # DB.loggers << Logger.new($stdout)
 end
 
 # Postgresql support extra data type
