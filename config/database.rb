@@ -1,11 +1,12 @@
 require "sequel"
-require "logger"
+require_relative './log_man'
+
 # Base default database
-
 # https://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html
-DB = Sequel.connect(Config.current.database_url, logger: Loggers.base)
+DB = Sequel.connect(Boot::Setting.current.database_url, logger: Boot::LogMan.base)
 
-if $APP_ENV == "development"
+environment = Boot::Setting.current.app_env
+if environment == "development"
   DB.sql_log_level = :debug
   # DB.loggers << Logger.new($stdout)
 end

@@ -1,28 +1,25 @@
-FROM ruby:2.7.4-alpine3.14
+FROM ruby:3.1-alpine3.15
 
-RUN apk add --update --no-cache \
-  build-base \
-  postgresql-dev \
-  tzdata
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 RUN gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
-RUN gem install bundler 
+RUN gem install bundler
 RUN bundle config mirror.https://rubygems.org https://gems.ruby-china.com
 
-
 WORKDIR /app
-
-RUN gem install bundler 
-RUN bundle config set --local path 'vendor/bundle'
 
 # Install gems
 ADD Gemfile* /app/
 
-RUN bundle install
+RUN apk add --update --no-cache --virtual .build-deps \
+  build-base \
+  postgresql-dev \
+  tzdata \
+  && bundle install \
+  && apk del .build-deps
 
 COPY . .
 
-# use APP_ENV
-CMD bundle exec rake server:run
+CMD ["rackup","-p","4567","-o", "0.0.0.0"]
 
-EXPOSE 3000
+EXPOSE 4567

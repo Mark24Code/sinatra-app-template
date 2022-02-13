@@ -29,18 +29,30 @@ Add rails-like migration command line helpers.
 * [x] Dockerfile
 
 
+# Start To Use
+
+## InitYourDatabase
+
+Make your own development database first.
+
+e.g
+```
+echo 'export APP_DATABASE_URL="postgres://postgres:<password>@localhost/postgres"' >> ~/.zshrc
+```
+
 ## Find helpful rake tasks
 
 `rake` or  `rake -T`
 
+all tasks in `config/tasks`, you can edit by yourself.
+
 ## Run server & develop
 
-`rake server:run`
-
+`rake server:dev`
 
 ## Production Server & deploy
 
-`APP_ENV=production  bundle exec rake server:run`
+`rake server:prod`
 
 you can also use docker
 
@@ -109,69 +121,23 @@ end
 
 ```
 
-## Mount different Sinatra web application
+## Route
 
-Edit `config.ru`
-
-Lark also is Rack application. We can use Rack middlewares.
+Edit routes and controllers in split files.
 
 ```ruby
-require_relative './cores/bootstrap'
-Bootstrap.rack 
+# main_app/routes/hello.route.rb
 
-# you can load Rack middleware here
+App.define_routes do
 
-# mount applications
-require 'controllers/root_controller'
-# routers(handy config)
-map '/' do
-  run RootController 
-end
-```
-
-
-# Base
-
-`bases` directory are use for Application Base Class.
-
-You can make different Configured Sinatra Application class here, then your application/controller just inherit the Base Class to create Application.
-
-It will share Config, and make less code.
-
-```ruby
-# Sinatra Doc http://sinatrarb.com/intro.html
-require 'sinatra/base'
-require 'json'
-
-class BaseController < Sinatra::Base
-  # Inject config
-
-  # Config & register Sinatra Extensions
-
-  # Rewrite Views dir
-  settings.views = File.expand_path(File.join($PROJECT_DIR, 'views'))
-
-  configure :development do
-    require 'sinatra/reloader'
-    register Sinatra::Reloader
+  get '/' do
+    json({
+      message: 'hello world'
+    })
   end
-
-  # mount Sinatra Helpers
-
-  # mount Sinatra middlewares
-
 end
-
-
-# Share Configuration
-
-class MyPageServer < BaseController
-end
-
-class MyApiServer < BaseController
-end
-
 ```
+
 
 # ORM & Tools
 
@@ -190,9 +156,8 @@ rake db:migrate[version]        # Run migrations
 rake db:rollback[version]       # Rollback to migration
 rake db:version                 # Prints current schema version
 rake list                       # List all tasks
-rake seed:all                   # Seed: run all seeds
-rake seed:run[seed_name]        # Seed: run seed
-rake server:run                 # Run server
+rake server:run                 # Run development server
+rake server:prod                # Run production server
 rake test                       # Run tests
 ```
 
@@ -200,78 +165,39 @@ rake test                       # Run tests
 
 ```
 .
-├── Dockerfile # Common Dockerfile
+├── Dockerfile
 ├── Gemfile
-├── Gemfile.lock
+├── LICENSE
 ├── README.md
-├── Rakefile # Rake Task Index File.
-├── bases # Base configured class. You can make different BaseClasses then reuse them.
-│   └── base_controller.rb # You contoller can inherit it or write yourself.
-├── config.ru # Application index. You can mount controllers and routes here.
-├── configs # You can make different configs for applications
-│   └── config.rb # Base config
-├── controllers 
-│   └── root_controller.rb
-├── cores # Inject ENVS and autoloads files, make MVC works
-│   ├── 01_config.rb # Names can controller mount order
-│   └── bootstrap.rb
-├── dbs # You can make multi database here
-│   ├── default_db.rb # default database connect instance
-│   └── migrations # save database migrations
-├── docs
-│   └── good.feature
-├── log # Directory for save logs by default
+├── Rakefile
+├── config
+│   ├── base
+│   │   └── base_setting.rb
+│   ├── boot.rb
+│   ├── database.rb
+│   ├── log_man.rb
+│   ├── setting.rb
+│   └── tasks
+│       ├── db.task.rb
+│       ├── server.task.rb
+│       └── test.task.rb
+├── config.ru
+├── logs
 │   └── development.log
-├── loggers # Loggers for application
-│   └── default_logger.rb
-├── public # Public resources
-│   └── favicon.svg
-├── seeds # Seeds
-├── tasks # Rake helpful tasks 
-│   ├── db_task.rb
-│   ├── seed_task.rb
-│   ├── server_task.rb
-│   └── test_task.rb
-├── tests # Test cases
-│   └── test_demo.rb
-└── views # views template
-    ├── base.erb
-    └── root.erb
+├── main_app
+│   ├── app.rb
+│   ├── models
+│   │   └── sample.model.rb
+│   ├── routes
+│   │   └── hello.route.rb
+│   └── tests
+│       └── demo.test.rb
+└── migrations
+
+9 directories, 19 files
 
 ```
 
-# Bootstrap & Load orders
+# Boot
 
-
-## For Rake
-
-```
-require_relative './cores/bootstrap'
-Bootstrap.rake
-```
-
-It will auto load files make sure rake task can work.
-
-In rake we can use `Config.current` to read configuration.
-
-`DB` also available.
-
-## For Rack/Applications
-
-In the same way
-
-```
-require_relative './cores/bootstrap'
-Bootstrap.rack
-# OR
-# Bootstrap.apps
-```
-
-It will autoload all dep mods. Share with a context.
-
-
-## Change load orders
-
- `cores/bootstrap.rb`  defines different load orders, you can change.
-
- In anther way, you can change filename to e.g  `00_before_all.rb` 、`01_first_load.rb` to control mods load order.
+ `config/boot.rb` you can define something here to do boot jobs. 

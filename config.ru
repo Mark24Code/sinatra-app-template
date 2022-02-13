@@ -1,8 +1,7 @@
-require_relative './cores/bootstrap'
-Bootstrap.rack
+require './config/boot'
+## load setting、logger、database
+Boot.prepare
 
-require 'controllers/root_controller'
-# routers(handy config)
-map '/' do
-  run RootController 
-end
+Boot.mount_app('main_app')
+
+run App

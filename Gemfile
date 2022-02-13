@@ -2,13 +2,17 @@
 
 source "https://rubygems.org"
 
-git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
-
 gem "sinatra"
 gem "sinatra-contrib"
 gem "sinatra-cors"
 gem "rake"
+gem "rack"
 gem "puma"
+gem "minitest"
 gem "sequel"
 gem "pg"
-gem "minitest"
+gem "jwt"
+
+group :development do
+  gem "rerun"
+end
