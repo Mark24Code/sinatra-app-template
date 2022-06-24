@@ -3,7 +3,7 @@ require 'sequel'
 
 namespace :db do
   MIGRATIONS_DIR = Pathname.new('./migrations')
-  DATABASE_URL = Boot::Setting.current.database_url
+  DATABASE_URL = Config::Setting.current.database_url
 
   desc 'Connect database'
   task :connect do
@@ -77,7 +77,7 @@ end
       Sequel::Migrator.run(DB, MIGRATIONS_DIR)
     end
 
-    if Boot::Setting.current.development?
+    if Config::Setting.current.development?
       # http://sequel.jeremyevans.net/rdoc/files/doc/migration_rdoc.html#label-Dumping+the+current+schema+as+a+migration
       # -d ruby style
       # system("sequel -d #{DATABASE_URL} > #{MIGRATIONS_DIR}/schema.rb")

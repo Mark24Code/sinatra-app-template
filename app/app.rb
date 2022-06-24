@@ -15,7 +15,7 @@ class App < Sinatra::Base
     set :allow_headers, 'content-type,if-modified-since,allow_headers,authorization'
 
     # http://sinatrarb.com/contrib/custom_logger
-    set :logger, Boot::LogMan.base
+    set :logger, Config::LogMan.base
   end
 
   configure :development do

@@ -1,7 +1,5 @@
-require './config/boot'
-## load setting、logger、database
-Boot.prepare
+require './config/auto'
 
-Boot.mount_app('app')
+Config.mount_app('app')
 
 run App

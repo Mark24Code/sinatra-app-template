@@ -173,7 +173,7 @@ rake test                       # Run tests
 ├── config
 │   ├── base
 │   │   └── base_setting.rb
-│   ├── boot.rb
+│   ├── Config.rb
 │   ├── database.rb
 │   ├── log_man.rb
 │   ├── setting.rb
@@ -200,4 +200,4 @@ rake test                       # Run tests
 
 # Boot
 
- `config/boot.rb` you can define something here to do boot jobs. 
+ `config/Config.rb` you can define something here to do boot jobs. 

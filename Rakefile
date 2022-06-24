@@ -1,6 +1,6 @@
-require_relative './config/boot'
-Boot.prepare
-Boot.load_tasks
+require_relative './config/auto'
+
+Config.load_tasks
 
 desc 'List all tasks'
 task :list do

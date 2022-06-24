@@ -2,11 +2,11 @@ require "logger"
 require "pathname"
 
 
-module Boot
+module Config
   module LogMan
     class << self
-      environment = Boot::Setting.current.app_env
-      @@logger = ::Logger.new(File.open(Pathname.new(Boot::ROOT_DIR + "./logs/#{environment}.log"), "a"))
+      environment = Config::Setting.current.app_env
+      @@logger = ::Logger.new(File.open(Pathname.new(Config::ROOT_DIR + "./logs/#{environment}.log"), "a"))
       @@logger.level = ::Logger::DEBUG if environment == "development"
 
       def base

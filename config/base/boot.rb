@@ -1,4 +1,4 @@
-module Boot
+module Config
   # prepare
   # add root to search path
   require 'pathname'
@@ -43,7 +43,7 @@ module Boot
       if load_modular.include? 'setting'
         # setting
         # load setting
-        require_relative './setting'
+        require_relative '../setting'
       end
 
       if load_modular.include? 'loggger'
@@ -59,3 +59,5 @@ module Boot
     end
   end
 end
+
+Config.prepare

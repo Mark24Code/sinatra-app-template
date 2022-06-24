@@ -1,6 +1,6 @@
 require_relative './base/base_setting'
 
-module Boot
+module Config
   module Setting
     Development.configure do
       set :app_env, ENV.fetch('APP_ENV'){ 'development' }

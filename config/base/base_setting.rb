@@ -1,4 +1,4 @@
-module Boot
+module Config
   module Setting
     class BaseConfig
       class << self
@@ -48,7 +48,7 @@ module Boot
     class << self
       def current
         env = ENV.fetch('APP_ENV'){ 'development' }
-        return Object.const_get("Boot::Setting::#{env.capitalize}")
+        return Object.const_get("Config::Setting::#{env.capitalize}")
       end
     end
   end
