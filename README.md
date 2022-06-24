@@ -126,7 +126,7 @@ end
 Edit routes and controllers in split files.
 
 ```ruby
-# main_app/routes/hello.route.rb
+# app/routes/hello.route.rb
 
 App.define_routes do
 
@@ -184,7 +184,7 @@ rake test                       # Run tests
 ├── config.ru
 ├── logs
 │   └── development.log
-├── main_app
+├── app
 │   ├── app.rb
 │   ├── models
 │   │   └── sample.model.rb
