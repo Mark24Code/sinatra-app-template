@@ -12,6 +12,7 @@ gem "minitest"
 gem "sequel"
 gem "pg"
 gem "jwt"
+gem "httparty"
 
 group :development do
   gem "rerun"
