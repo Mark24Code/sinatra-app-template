@@ -1,5 +1,3 @@
-require './config/auto'
-
-Config.mount_app('app')
+require './app/app'
 
 run App

@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/contrib'
+require 'sinatra/cors'
 
 # Sinatra Doc http://sinatrarb.com/intro.html
 class App < Sinatra::Base
@@ -24,27 +25,11 @@ class App < Sinatra::Base
     register Sinatra::Reloader
   end
 
-  # register UsersController
-  # register TodoListsController
+  # Dir['./app/models/*.model.rb'].sort.each do |model_file|
+  #   require_relative model_file
+  # end
 
-  class << self
-    def define_routes(&block)
-      class_eval(&block) if block_given?
-    end
-
-    def autoload_models
-      Dir['./**/*.model.rb'].sort.each do |model_file|
-        require model_file
-      end
-    end
-
-    def autoload_routes
-      Dir['./**/*.route.rb'].sort.each do |route_file|
-        require route_file
-      end
-    end
-  end
+  # Dir['./app/routes/*.route.rb'].sort.each do |route_file|
+  #   require_relative route_file
+  # end
 end
-
-App.autoload_models
-App.autoload_routes
