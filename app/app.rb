@@ -1,8 +1,8 @@
-require 'sinatra/base'
-require 'sinatra/contrib'
-require 'sinatra/cors'
+require_relative '../config/base'
 
-# Sinatra Doc http://sinatrarb.com/intro.html
+class AppException < Exception
+end
+
 class App < Sinatra::Base
   # Help Doc http://sinatrarb.com/contrib/
   register Sinatra::Contrib
@@ -20,16 +20,36 @@ class App < Sinatra::Base
     enable :logging
   end
 
-  configure :development do
-    require 'sinatra/reloader'
-    register Sinatra::Reloader
+  # middlewares
+  Dir['./app/middlewares/*.middleware.rb'].each do |route_file|
+    require route_file
   end
 
-  # Dir['./app/models/*.model.rb'].sort.each do |model_file|
-  #   require_relative model_file
-  # end
+  use Middleware::Sample
 
-  # Dir['./app/routes/*.route.rb'].sort.each do |route_file|
-  #   require_relative route_file
-  # end
+
+  # TODO lazy load
+  # when use it then load it
+  Dir['./app/routes/*.model.rb'].each do |route_file|
+    require route_file
+  end
+
+  Dir['./app/routes/*.route.rb'].each do |route_file|
+    require route_file
+  end
+
+  # custom Exception
+  error AppException do |message|
+  end
+
+  # custom 404
+  not_found do
+  end
+
+  # namespace
+  namespace '/api/v1' do
+    get '/ping' do
+      "ping success"
+    end
+  end
 end
