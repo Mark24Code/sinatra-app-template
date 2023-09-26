@@ -4,6 +4,7 @@ require 'sequel'
 namespace :db do
   MIGRATIONS_DIR = Pathname.new('./migrations')
   DATABASE_URL = "postgres://#{ENV["DATABASE_USERNAME"]}:#{ENV["DATABASE_PASSWORD"]}@#{ENV["DATABASE_HOST"]}:#{ENV["DATABASE_PORT"]}/#{ENV["DATABASE_NAME"]}"
+  DB = Sequel.connect(DATABASE_URL)
 
   desc 'Connect database'
   task :connect do
