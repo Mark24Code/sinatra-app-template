@@ -18,6 +18,7 @@ class App < Sinatra::Base
   DB = Sequel.connect(
     adapter: 'postgres',
     host: settings.database_host,
+    port: settings.database_port,
     database: settings.database_name,
     user: settings.database_user,
     password: settings.database_password,
