@@ -1,7 +1,12 @@
+require "logger"
+require "pathname"
+
 # http://sinatrarb.com/contrib/custom_logger
 class App < Sinatra::Base
   configure do
-    set :logger, Config::LogMan.base
+    logger = ::Logger.new(File.open(Pathname.new(settings.root_dir + "./logs/#{settings.app_env}.log"), "a"))
+    logger.level = ::Logger::DEBUG if settings.development?
+    set :logger, logger
   end
 end
 

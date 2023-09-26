@@ -1,4 +1,4 @@
-require_relative '../config/base'
+require_relative '../config/core/base'
 
 class AppException < Exception
 end

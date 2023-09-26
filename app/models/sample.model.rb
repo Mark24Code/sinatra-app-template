@@ -1,2 +1,2 @@
-# class Sample < Sequel::Model
-# end
+class Sample < Sequel::Model
+end

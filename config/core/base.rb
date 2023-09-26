@@ -14,6 +14,11 @@ class App < Sinatra::Base
     register Sinatra::Reloader
   end
 
-  # require_relative '../config/loggger'
-  require_relative '../config/cors'
+  # require_relative '../loggger'
+  require_relative '../setting'
+  require_relative '../cors'
+  require_relative '../logger'
+  require_relative '../server'
+  require_relative '../database'
+  require_relative './connect_sequel'
 end
