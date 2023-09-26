@@ -1,6 +1,6 @@
 class App < Sinatra::Base
   configure do
-    set :root_dir, Pathname.new('.')
+    set :root, Pathname.new('.')
     set :app_env, ENV.fetch('APP_ENV'){ 'development' }
     set :bind, ENV.fetch('APP_HOST') { '0.0.0.0' }
     set :port, ENV.fetch('APP_PORT') { 4567 }
