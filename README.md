@@ -74,15 +74,15 @@ Config::Default.configure do
   set :database_url, ENV['DATABASE_URL']
 end
 
-Config::Development.configure do 
+Config::Development.configure do
   set :database_url, 'ENV['DATABASE_URL']'
 end
 
-Config::Test.configure do 
+Config::Test.configure do
   set :database_url, ENV['DATABASE_URL']
 end
 
-Config::Production.configure do 
+Config::Production.configure do
   # set :database_url, ENV['DATABASE_URL']
 end
 ```
@@ -115,7 +115,7 @@ class MyConfig < Config::Base
 
 end
 
-MyConfig.configure do 
+MyConfig.configure do
   # set :database_url, ENV['DATABASE_URL']
 end
 
@@ -155,9 +155,10 @@ rake db:ls                      # List database tables
 rake db:migrate[version]        # Run migrations
 rake db:rollback[version]       # Rollback to migration
 rake db:version                 # Prints current schema version
+rake docker:push[version]       # Push Docker
 rake list                       # List all tasks
-rake server:run                 # Run development server
-rake server:prod                # Run production server
+rake server:dev                 # Start development server
+rake server:prod                # Start production server
 rake test                       # Run tests
 ```
 
@@ -167,37 +168,42 @@ rake test                       # Run tests
 .
 ├── Dockerfile
 ├── Gemfile
+├── Gemfile.lock
 ├── LICENSE
 ├── README.md
 ├── Rakefile
-├── config
-│   ├── base
-│   │   └── base_setting.rb
-│   ├── Config.rb
-│   ├── database.rb
-│   ├── log_man.rb
-│   ├── setting.rb
-│   └── tasks
-│       ├── db.task.rb
-│       ├── server.task.rb
-│       └── test.task.rb
-├── config.ru
-├── logs
-│   └── development.log
 ├── app
 │   ├── app.rb
+│   ├── middlewares
+│   │   ├── sample.middleware.rb
+│   │   └── sample_auth.middleware.rb
 │   ├── models
 │   │   └── sample.model.rb
 │   ├── routes
 │   │   └── hello.route.rb
 │   └── tests
 │       └── demo.test.rb
-└── migrations
-
-9 directories, 19 files
+├── config
+│   ├── core
+│   │   ├── base.rb
+│   │   └── connect_sequel.rb
+│   ├── cors.rb
+│   ├── database.rb
+│   ├── logger.rb
+│   ├── server.rb
+│   └── setting.rb
+├── config.ru
+├── logs
+│   └── development.log
+├── migrations
+└── tasks
+    ├── db.task.rb
+    ├── docker.task.rb
+    ├── server.task.rb
+    └── test.task.rb
 
 ```
 
 # Boot
 
- `config/Config.rb` you can define something here to do boot jobs. 
+ `config/Config.rb` you can define something here to do boot jobs.

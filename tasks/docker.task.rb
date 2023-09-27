@@ -2,7 +2,6 @@ namespace :docker do
   desc 'Push Docker'
   task :push, [:version] do |t, args|
     puts "[Message] Before run, you need login"
-    puts "docker login xxx"
     version = args[:version]
     puts "Your docker image version:"
     puts version
