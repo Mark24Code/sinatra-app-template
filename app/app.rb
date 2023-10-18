@@ -16,6 +16,7 @@ class App < Sinatra::Base
 
     # http://sinatrarb.com/contrib/custom_logger
     set :logger, Config::LogMan.base
+    enable :logging
   end
 
   configure :development do
