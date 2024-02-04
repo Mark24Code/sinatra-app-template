@@ -7,6 +7,6 @@ class App < Sinatra::Base
     logger = ::Logger.new(File.open(Pathname.new(settings.root + "./logs/#{settings.app_env}.log"), "a"))
     logger.level = ::Logger::DEBUG if settings.development?
     set :logger, logger
+    enable :logging
   end
 end
-
