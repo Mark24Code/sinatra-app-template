@@ -6,43 +6,48 @@ Tech component: Rack+Sinatra+Sequel and default use Postgresql database.
 
 Add rails-like migration command line helpers.
 
-
 ## Openbox Features
 
 ### Apps
 
-* [x] Multi Env Configuration
-* [x] Multi router DSL base on Rack
-* [x] CORS support
-* [x] Hot reload
-* [x] Custom logger
-* [x] ORM base on Sequel'
+- [x] Multi Env Configuration
+- [x] Multi router DSL base on Rack
+- [x] CORS support
+- [x] Hot reload
+- [x] Custom logger
+- [x] ORM base on Sequel
 
 ### Tasks
 
-* [x] Rails-like migration helpers
-* [x] Test
-* [x] Seed
+- [x] Rails-like migration helpers
+- [x] Test
+- [x] Seed
 
 ### CI&CD
 
-* [x] Dockerfile
-
+- [x] Dockerfile
 
 # Start To Use
 
-## InitYourDatabase
+## Config App
 
-Make your own development database first.
+`config/*.config.rb` you can define something here to do boot jobs.
 
-e.g
+## Database
+
+Setting database environment vars:
+
+```shell
+DATABASE_HOST
+DATABASE_PORT
+DATABASE_NAME
+DATABASE_USER
+DATABASE_PASSWORD
 ```
-echo 'export APP_DATABASE_URL="postgres://postgres:<password>@localhost/postgres"' >> ~/.zshrc
-```
 
-## Find helpful rake tasks
+## Rake Tasks
 
-`rake` or  `rake -T`
+`rake` or `rake -T`
 
 all tasks in `config/tasks`, you can edit by yourself.
 
@@ -58,89 +63,7 @@ you can also use docker
 
 `docker built -t <what your docker image label>  .`
 
-## Custom server & database
-
-
-You can use DSL to config `Key:Value` , then you application just use.
-
-```ruby
-Config::Default.configure do
-  set :app_env, ENV.fetch('APP_ENV'){ 'development' }
-  set :bind, ENV.fetch('HOST') { '0.0.0.0' }
-  set :port, ENV.fetch('PORT') { 3000 }
-  set :secrets, ENV.fetch('SECRETS') { 'YOU CANNOT GUESS ME' }
-  set :max_threads, ENV.fetch('MAX_THREADS') { 5 }
-
-  set :database_url, ENV['DATABASE_URL']
-end
-
-Config::Development.configure do
-  set :database_url, 'ENV['DATABASE_URL']'
-end
-
-Config::Test.configure do
-  set :database_url, ENV['DATABASE_URL']
-end
-
-Config::Production.configure do
-  # set :database_url, ENV['DATABASE_URL']
-end
-```
-
-They have an inheritance relationship
-
-```
-Development < Default
-Test < Default
-Production < Default
-```
-
-
-In your code, just use  `Config` directly. `core/bootstrap`  do a work that loaded all necessery mods before your code.
-
-```Ruby
-Config.current  # current env configuration
-
-Config::Development.database_url
-
-Config::Development
-
-Config::Development.database_url
-```
-
-You can also create your own `Config`  for your single Application:
-
-```ruby
-class MyConfig < Config::Base
-
-end
-
-MyConfig.configure do
-  # set :database_url, ENV['DATABASE_URL']
-end
-
-```
-
-## Route
-
-Edit routes and controllers in split files.
-
-```ruby
-# app/routes/hello.route.rb
-
-App.define_routes do
-
-  get '/' do
-    json({
-      message: 'hello world'
-    })
-  end
-end
-```
-
-
 # ORM & Tools
-
 
 Provide rails-like rake task help you build app quickly.
 
@@ -173,28 +96,29 @@ rake test                       # Run tests
 ├── README.md
 ├── Rakefile
 ├── app
-│   ├── app.rb
-│   ├── middlewares
-│   │   ├── sample.middleware.rb
-│   │   └── sample_auth.middleware.rb
-│   ├── models
-│   │   └── sample.model.rb
-│   ├── routes
-│   │   └── hello.route.rb
-│   └── tests
-│       └── demo.test.rb
+│   ├── app.rb
+│   ├── middlewares
+│   │   ├── sample.middleware.rb
+│   │   └── sample_auth.middleware.rb
+│   ├── models
+│   │   └── sample.model.rb
+│   ├── routes
+│   │   └── hello.route.rb
+│   └── tests
+│       └── sample.test.rb
 ├── config
-│   ├── core
-│   │   ├── base.rb
-│   │   └── connect_sequel.rb
-│   ├── cors.rb
-│   ├── database.rb
-│   ├── logger.rb
-│   ├── server.rb
-│   └── setting.rb
+│   ├── core
+│   │   ├── base.rb
+│   │   └── connect_sequel.rb
+│   ├── cors.rb
+│   ├── database.rb
+│   ├── logger.rb
+│   ├── server.rb
+│   └── setting.rb
 ├── config.ru
 ├── logs
-│   └── development.log
+│   ├── development.log
+│   └── production.log
 ├── migrations
 └── tasks
     ├── db.task.rb
@@ -203,7 +127,3 @@ rake test                       # Run tests
     └── test.task.rb
 
 ```
-
-# Boot
-
- `config/Config.rb` you can define something here to do boot jobs.
